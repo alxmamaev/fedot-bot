@@ -19,7 +19,7 @@ def getMessage(token):
 
 @app.route("/")
 def webhook():
-    return "Hello, im dodo bot.\n", 200
+    return "Welcome.\n", 200
 
 if __name__=="__main__":
     print("Creating bot")
@@ -41,4 +41,4 @@ if __name__=="__main__":
         bot.telegram.set_webhook(url=WEBHOOK_URL)
     
         print("Starting bot")
-        app.run(port=8089)
+        app.run(port=8080)

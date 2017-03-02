@@ -7,7 +7,7 @@ import telebot
 import redis
 
 
-logger = logging.getLogger("dodo-bot")
+logger = logging.getLogger("fedot-bot")
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level = logging.INFO)
 
 class Bot:
