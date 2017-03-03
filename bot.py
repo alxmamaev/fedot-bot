@@ -28,7 +28,8 @@ class Bot:
         self.data = {}
 
 
-        self.const = json.loads(codecs.open("const.json", "r", "utf-8").read()) 
+        self.const = json.loads(codecs.open("const.json", "r", "utf-8").read())
+        self.admins =  json.loads(os.environ.get("ADMINS","[]"))
         self.telegram.set_update_listener(self.proсess_updates)
 
     def collect_modules(self):
