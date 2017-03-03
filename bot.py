@@ -43,16 +43,17 @@ class Bot:
         key = "user:%s:%s"%(user_id, field)
         value = json.dumps(value)
         self.redis.set(key, value, kwargs)
+        
         logger.info("user:%s set[%s]>>\"%s\""%(user_id, field, value))
 
     def user_get(self, user_id, field, default=None):
         key = "user:%s:%s"%(user_id, field)
         value = self.redis.get(key) or default
-        if type(value) is bytes:
-            value = value.decode('utf-8')
+        if type(value) is bytes: value = value.decode('utf-8')
+        
         logger.info("user:%s get[%s]>>\"%s\""%(user_id, field, value))
         
-        value = json.loads(value)
+        if value: value = json.loads(value)
         return value
 
     def user_delete(self, user_id, field):

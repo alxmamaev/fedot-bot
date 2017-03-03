@@ -9,5 +9,6 @@
 	],
 	"achievements-list": "*Мои ачивки:*\n\n {% for achievement in achievements %}🥇 _{{achievement}}_\n{% endfor %}\n\n*Всего ачивок:* {{achievements|length}}",
 	"achievements-get-username": "Введите имя или @username человека 🙎‍♂️, которому хотите передать ачивку 🥈.",
-	"achievements-get-title": "Ввведите заголовок ачивки 👀"
+	"achievements-get-title": "Ввведите заголовок ачивки 👀",
+	"achievements-user-info": "*{{name}}* {{username}}\n\n*Пол*: {% if sex %}Мальчик{% else %}Девочка{% endif %}\n*Отряд*: {{squad}}"
 }

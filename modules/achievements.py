@@ -20,10 +20,10 @@ def get_achievements(bot, message):
 	NOT_FOUND_MESSAGES = bot.const["achievements-not-found"]
 	ACHIEVMENTS_LIST_MESSAGE = jinja2.Template(bot.const["achievements-list"])
 	
-	achievements = bot.user_get(message.u_id, "achievements")
+	achievements = bot.user_get(message.u_id, "achievements") or []
 
 	if not achievements: achievements_message = random.choice(NOT_FOUND_MESSAGES)
-	else: achievements_message = ACHIEVMENTS_LIST_MESSAGE.render(achievements=achievements.split(";"))
+	else: achievements_message = ACHIEVMENTS_LIST_MESSAGE.render(achievements=achievements)
 
 	bot.telegram.send_message(message.u_id, achievements_message)
 
@@ -36,34 +36,55 @@ def get_username(bot, message):
 	
 	keyboard = bot.get_keyboard(STANDART_KEYBOARD)
 	bot.telegram.send_message(GET_USERNAME_MESSAGE, reply_markup = keyboard)
-	bor.user_set(message.u_id, "next_handler", "achievements-choose-user")
 
+	bot.user_set(message.u_id, "next_handler", "achievements-choose-user")
 
 def choose_user(bot, message):
 	USER_NOT_FOUND_MESSAGE = bot.const["achievements-user-not-found"]
+	USER_INFO_MESSAGE = jinja2.Template(bot.const["achievements-user-info"])
 
-	users = json.loads(bot.redis.get("users", "{}"))
+	username = message.text.lower()
+	users = json.loads(bot.redis.get("users", "[]"))
 	found_users = []
 
-	if message.text.starts_with("@") and users.get(message.text): 
-		found_users.append(users.get(message.text))
-	else:
-		for username, user in users.items():
-			if message.text.lower() in user_info["name"].lower(): 
-				found_users.append(user_info)
+	for user in users:
+		if username in user["name"].lower() or username in user["username"].lower(): found_users.append(user_info)
 
 
 	if not found_users: 
 		bot.telegram.send_message(message.u_id, USER_NOT_FOUND_MESSAGE)
-		bot.user_set(message.u_id, "next_handler", "achievements-get-username")
+		get_username(bot, message)
 		return
 
-	bot.user_set(message.u_id, "achievements_found_users", json.dumps(found_users))
-	bot.user_set(message.u_id, "achievements_found_users_index", "0")
+	bot.user_set(message.u_id, "achievements_found_users", found_users)
+	bot.user_set(message.u_id, "achievements_cur_user", 0)
+
+	bot.telegram.send_message(message.u_id, USER_INFO_MESSAGE.render(**found_users[0]))
 
 def next_user(bot, query):
-	users = json.loads(bot.user_set(message.u_id, "achievements_found_users"))
-	cur_user = bot.user_set(message.u_id, "achievements_found_users_index", "0")
+	USER_INFO_MESSAGE = jinja2.Template(bot.const["achievements-user-info"])
+
+	users = bot.user_get(query.u_id, "achievements_found_users")
+	cur_user = bot.user_get(query.u_id, "achievements_cur_user")
+
+	if query.data.split("/") == "next": cur_user+=1
+	else: cur_user-=1 
+	bot.user_set(message.u_id, "achievements_found_users_index", cur_user)
+
+	bot.telegram.edit_message(message=query.message, text=USER_INFO_MESSAGE.render(**users[cur_user]))	
+
+def select_user(bot, query):
+	USER_INFO_MESSAGE = jinja2.Template(bot.const["achievements-user-info"])
+	users = bot.user_get(query.u_id, "achievements_found_users")
+	cur_user = bot.user_get(query.u_id, "achievements_cur_user")
+
+	bot.telegram.edit_message(message=query.message, text=USER_INFO_MESSAGE.render(**users[cur_user]))	
+
+	bot.user_set(query.u_id, "achievements_user", users[cur_user])	
+	bot.user_delete(query.u_id, "achievements_found_users")
+	bot.user_delete(query.u_id, "achievements_cur_user")
+
+	get_achievement_title(bot, query.message)
 
 def get_achievement_title(bot, message):
 	GET_ACHIEVMENT_TITLE_MESSAGE = bot.const["achievements-get-title"]
