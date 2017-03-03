@@ -1,5 +1,6 @@
 import os
 import json
+import codecs
 import logging
 import importlib
 
@@ -21,11 +22,13 @@ class Bot:
         self.callback_handlers = {}
         self.default_handler = "main-menu"
 
+
         self.redis = redis.from_url(os.environ.get("REDIS_URL","redis://localhost:6379"))
         self.logger = logger
         self.data = {}
 
 
+        self.const = json.loads(codecs.open("const.json", "r", "utf-8").read()) 
         self.telegram.set_update_listener(self.proсess_updates)
 
     def collect_modules(self):
