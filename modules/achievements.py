@@ -45,11 +45,12 @@ def choose_user(bot, message):
 	users = json.loads(bot.redis.get("users", "{}"))
 	found_users = []
 
-	if message.text.starts_with("@"): 
+	if message.text.starts_with("@") and users.get(message.text): 
 		found_users.append(users.get(message.text))
 	else:
 		for username, user in users.items():
-			if message.text.lower() in user_info["name"].lower(): found_users.append(user_info)
+			if message.text.lower() in user_info["name"].lower(): 
+				found_users.append(user_info)
 
 
 	if not found_users: 
@@ -60,7 +61,9 @@ def choose_user(bot, message):
 	bot.user_set(message.u_id, "achievements_found_users", json.dumps(found_users))
 	bot.user_set(message.u_id, "achievements_found_users_index", "0")
 
-	bot.user_set(message.u_id, "next_handler", "achievements-get-title")
+def next_user(bot, query):
+	users = json.loads(bot.user_set(message.u_id, "achievements_found_users"))
+	cur_user = bot.user_set(message.u_id, "achievements_found_users_index", "0")
 
 def get_achievement_title(bot, message):
 	GET_ACHIEVMENT_TITLE_MESSAGE = bot.const["achievements-get-title"]
