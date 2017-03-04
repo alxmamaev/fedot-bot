@@ -1,5 +1,7 @@
 import telebot
 import random
+import json
+
 
 def init(bot):
 	bot.handlers["reg-start"] = start
@@ -65,14 +67,16 @@ def get_age(bot, message):
 	GET_QUAD_MESSAGE = bot.const["registration-get-quad"]
 	QUADS_KEYBOARD = bot.get_keyboard(bot.const["quads-keyboard"])
 
+	user_age = message.text
+
 	#validation
-	if not message.text.isdigit() and 12<int(message.text)<20:
+	if not user_age.isdigit() and 12<int(user_age)<20:
 		get_sex(bot, None)
 		return
 
 	#save to redis
 	user_info = bot.user_get(message.u_id, "info")
-	user_info["sex"] = user_sex
+	user_info["age"] = user_age
 	bot.user_set(message.u_id, "info", user_info)
 
 	#ask next question
@@ -80,10 +84,22 @@ def get_age(bot, message):
 	bot.user_set(message.u_id, "next_handler", "reg-get-quad")
 
 def get_quad(bot, message):
+	user_quad = message.text
+
 	#validation
-	if bot.get_key(bot.const["quads-keyboard"], message.text) is None:
+	if bot.get_key(bot.const["quads-keyboard"], user_quad) is None:
 		get_sex(bot, None)
 		return
+
+	#save to redis
+	user_info = bot.user_get(message.u_id, "info")
+	user_info["quad"] = user_quad
+	bot.user_delete(message.u_id, "info")
+
+	#register new user
+	users = json.loads(bot.redis.get("users") or "[]")
+	users.append(user_info)
+	bot.redis.set("users", json.dumps(users))
 
 	#end of questioning
 	bot.telegram.send_message(message.u_id, "Все ок", reply_markup=telebot.types.ReplyKeyboardRemove())
