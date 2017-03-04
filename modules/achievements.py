@@ -8,8 +8,7 @@ STANDART_KEYBOARD = [[("Меню 🏠", "menu")]]
 
 def init(bot):
 	bot.handlers["achv-start"] = start
-	bot.handlers["achv-choose-user"] = choose_user	
-
+	bot.handlers["achv-choose-user"] = choose_user
 	bot.callback_handlers["achv-news-user"] = next_user
 	
 

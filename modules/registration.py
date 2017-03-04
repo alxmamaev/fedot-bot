@@ -1,3 +1,5 @@
+import telebot
+
 def init(bot):
 	bot.handlers["reg-start"] = start
 	bot.handlers["reg-get-name"] = get_name
@@ -6,7 +8,8 @@ def init(bot):
 
 def start(bot, message):
 	GET_NAME_MESSAGE = bot.const["registration-get-name"]
-	bot.telegram.send_message(message.u_id, GET_NAME_MESSAGE, reply_markup=None)
+	bot.telegram.send_message(message.u_id, GET_NAME_MESSAGE, reply_markup=telebot.types.ReplyKeyboardRemove())
+	
 	bot.user_set(message.u_id, "next_handler", "reg-get-name")
 
 def get_name(bot, message):
@@ -29,8 +32,8 @@ def get_sex(bot, message):
 
 def get_quad(bot, message):
 	if bot.get_key(bot.const["quads-keyboard"], message.text) is None:
-		start(bot, None)
+		get_sex(bot, None)
 		return
 
-	bot.telegram.send_message(message.u_id, "Все ок")
+	bot.telegram.send_message(message.u_id, "Все ок", reply_markup=telebot.types.ReplyKeyboardRemove())
 	bot.user_set(message.u_id, "next_handler", "")
