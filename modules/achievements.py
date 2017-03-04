@@ -11,7 +11,7 @@ def init(bot):
 	bot.handlers["achv-choose-user"] = choose_user	
 
 	bot.callback_handlers["achv-news-user"] = next_user
-	bot.callback_handlers["achv-news-user"]
+	
 
 def start(bot, message):
 	if message.u_id in bot.admins: get_username(bot, message)
