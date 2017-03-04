@@ -10,5 +10,10 @@
 	"achievements-list": "*Мои ачивки:*\n\n {% for achievement in achievements %}🥇 _{{achievement}}_\n{% endfor %}\n\n*Всего ачивок:* {{achievements|length}}",
 	"achievements-get-username": "Введите имя или @username человека 🙎‍♂️, которому хотите передать ачивку 🥈.",
 	"achievements-get-title": "Ввведите заголовок ачивки 👀",
-	"achievements-user-info": "*{{name}}* {{username}}\n\n*Пол*: {% if sex %}Мальчик{% else %}Девочка{% endif %}\n*Отряд*: {{squad}}"
+	"achievements-user-info": "*{{name}}* {{username}}\n\n*Пол*: {% if sex %}Мальчик{% else %}Девочка{% endif %}\n*Отряд*: {{squad}}",
+	"achievements-user-not-found": "Пользователь не найден .",
+
+	"registration-get-name":"Привет! Я Бот-Федот 🤖, давай знакомиться. Как тебя зовут 😁?",
+	"registration-get-sex": "Ты мальчик или девочка? 😁",
+	"registration-get-quad": "В каком отряде ты живешь?"
 }

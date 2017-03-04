@@ -1,9 +1,10 @@
 import random
+import json
 import telebot
 import jinja2
 
 
-STANDART_KEYBOARD = [["Меню 🏠", "menu"]]
+STANDART_KEYBOARD = [[("Меню 🏠", "menu")]]
 
 def init(bot):
 	bot.handlers["achv-start"] = start
@@ -14,22 +15,22 @@ def init(bot):
 
 def start(bot, message):
 	if message.u_id in bot.admins: get_username(bot, message)
-	else: give_achievement(bot, message)	
+	else: get_achievements(bot, message)	
 
 
 def get_inline_navigation(users, cur_user):
 	markup = telebot.types.InlineKeyboardMarkup(row_width=3)
-    next_button = telebot.types.InlineKeyboardButton("Далее ⏩",callback_data="achv-news-user/next")
-    back_button = telebot.types.InlineKeyboardButton("⏪ Назад",callback_data="achv-news-user/last")
-    chouse_user = telebot.types.InlineKeyboardButton("Выбрать ☝🏻", callback_data="achv-choose-user")
+	next_button = telebot.types.InlineKeyboardButton("Далее ⏩",callback_data="achv-news-user/next")
+	back_button = telebot.types.InlineKeyboardButton("⏪ Назад",callback_data="achv-news-user/last")
+	chouse_user = telebot.types.InlineKeyboardButton("Выбрать ☝🏻", callback_data="achv-choose-user")
 
-    control_panel = []
-    if cur_user != 0: control_panel.append(back_button)
-    if cur_entrie != entries_count-1: control_panel.append(next_button)
-    markup.row(*control_panel)
-    markup.row(chouse_user)
+	control_panel = []
+	if cur_user != 0: control_panel.append(back_button)
+	if cur_entrie != entries_count-1: control_panel.append(next_button)
+	markup.row(*control_panel)
+	markup.row(chouse_user)
 
-    return markup
+	return markup
 
 
 # Get acvievements
@@ -53,7 +54,7 @@ def get_username(bot, message):
 	GET_USERNAME_MESSAGE = bot.const["achievements-get-username"]
 	
 	keyboard = bot.get_keyboard(STANDART_KEYBOARD)
-	bot.telegram.send_message(GET_USERNAME_MESSAGE, reply_markup = keyboard)
+	bot.telegram.send_message(message.u_id, GET_USERNAME_MESSAGE,  reply_markup = keyboard)
 
 	bot.user_set(message.u_id, "next_handler", "achv-choose-user")
 
@@ -62,7 +63,7 @@ def choose_user(bot, message):
 	USER_INFO_MESSAGE = jinja2.Template(bot.const["achievements-user-info"])
 
 	username = message.text.lower()
-	users = json.loads(bot.redis.get("users", "[]"))
+	users = json.loads(bot.redis.get("users") or "[]")
 	found_users = []
 
 	for user in users:

@@ -10,6 +10,10 @@ def init(bot):
     bot.handlers["main-menu"] = menu
 
 def menu(bot, message):
+	if message.u_id not in bot.admins and not bot.user_get(message.u_id, "register"):
+		bot.call_handler("reg-start", message)
+		return
+
 	key = bot.get_key(MENU, message.text)
 	if key is not None:
 		bot.call_handler(key, message)
