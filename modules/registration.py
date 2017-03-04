@@ -1,4 +1,5 @@
 import telebot
+import random
 
 def init(bot):
 	bot.handlers["reg-start"] = start
@@ -7,13 +8,13 @@ def init(bot):
 	bot.handlers["reg-get-quad"] = get_quad
 
 def start(bot, message):
-	GET_NAME_MESSAGE = bot.const["registration-get-name"]
-	bot.telegram.send_message(message.u_id, GET_NAME_MESSAGE, reply_markup=telebot.types.ReplyKeyboardRemove())
+	GET_NAME_MESSAGE = random.choice(bot.const["registration-get-name"])
+	bot.telegram.send_message(message.u_id, GET_NAME_MESSAGE, reply_markup=telebot.types.ReplyKeyboardRemove(), parse_mode = "Markdown")
 	
 	bot.user_set(message.u_id, "next_handler", "reg-get-name")
 
 def get_name(bot, message):
-	GET_SEX_MESSAGE = bot.const["registration-get-sex"]
+	GET_SEX_MESSAGE = random.choice(bot.const["registration-get-sex"])
 	SEX_KEYBOARD = bot.get_keyboard(bot.const["sex-keyboard"])
 
 	bot.telegram.send_message(message.u_id, GET_SEX_MESSAGE, reply_markup = SEX_KEYBOARD)
