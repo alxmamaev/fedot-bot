@@ -7,6 +7,7 @@ def init(bot):
 	bot.handlers["reg-start"] = start
 	bot.handlers["reg-get-name"] = get_name
 	bot.handlers["reg-get-sex"]	= get_sex
+	bot.handlers["reg-get-age"] = get_age
 	bot.handlers["reg-get-quad"] = get_quad
 
 def start(bot, message):
@@ -33,7 +34,7 @@ def get_name(bot, message):
 	#save to redis
 	user_info = {
 		"id": message.u_id,
-		"username": message.user.username,
+		"username": message.from_user.username,
 		"name": user_name
 	}
 	bot.user_set(message.u_id, "info", user_info)
@@ -59,7 +60,7 @@ def get_sex(bot, message):
 	bot.user_set(message.u_id, "info", user_info)
 
 	#ask next question
-	bot.telegram.send_message(message.u_id, GET_AGE_MESSAGE)
+	bot.telegram.send_message(message.u_id, GET_AGE_MESSAGE, reply_markup=telebot.types.ReplyKeyboardRemove())
 	bot.user_set(message.u_id, "next_handler", "reg-get-age")
 
 def get_age(bot, message):
@@ -97,9 +98,10 @@ def get_quad(bot, message):
 	bot.user_delete(message.u_id, "info")
 
 	#register new user
-	users = json.loads(bot.redis.get("users") or "[]")
+	users = bot.user_get(0, "users") or []
 	users.append(user_info)
-	bot.redis.set("users", json.dumps(users))
+	bot.user_set(0, "users", users)
+	bot.user_set(message.u_id, "register", True)	
 
 	#end of questioning
 	bot.telegram.send_message(message.u_id, "Все ок", reply_markup=telebot.types.ReplyKeyboardRemove())

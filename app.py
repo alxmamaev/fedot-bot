@@ -23,7 +23,7 @@ def webhook():
 
 if __name__=="__main__":
     print("Creating bot")
-    bot = Bot(debug=False)
+    bot = Bot(debug=True)
 
     print("Collecting modules")
     bot.collect_modules()
