@@ -6,13 +6,13 @@ def init(bot):
 
 def menu(bot, message):
 	MENU_KEYBOARD = bot.get_keyboard(bot.const["menu-keyboard"])
-	MENU_MESSAGE = bot.get_keyboard(bot.const["menu-message"])
+	MENU_MESSAGE = bot.const["menu-message"]
 
 	if message.u_id not in bot.admins and not bot.user_get(message.u_id, "register"):
 		bot.call_handler("reg-start", message)
 		return
 
-	key = bot.get_key(MENU, message.text)
+	key = bot.get_key(bot.const["menu-keyboard"], message.text)
 	if key is not None:
 		bot.call_handler(key, message)
 		return

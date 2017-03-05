@@ -106,3 +106,4 @@ def get_quad(bot, message):
 	#end of questioning
 	bot.telegram.send_message(message.u_id, "Все ок", reply_markup=telebot.types.ReplyKeyboardRemove())
 	bot.user_set(message.u_id, "next_handler", "")
+	bot.call_handler("main-menu")
