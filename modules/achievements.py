@@ -5,6 +5,7 @@ import jinja2
 
 def init(bot):
 	bot.handlers["achv-start"] = start
+	bot.handlers["achv-get-achievement"] = get_achievements 
 	bot.handlers["achv-give-achievement"] = give_achievement
 	bot.handlers["achv-get-username"] = get_username
 	bot.handlers["achv-get-title"] = get_title
@@ -14,8 +15,8 @@ def init(bot):
 	
 
 def start(bot, message):
-	if message.u_id in bot.admins: give_achievement(bot, message)
-	else: get_achievements(bot, message)	
+	if message.u_id in bot.admins: bot.call_handler("achv-give-achievement", message)
+	else: bot.call_handler("achv-get-achievement", message)
 
 
 def get_inline_navigation(users, cur_user):
@@ -83,7 +84,7 @@ def get_username(bot, message):
 	
 	if not found_users: 
 		bot.telegram.send_message(message.u_id, USER_NOT_FOUND_MESSAGE)
-		give_achievement(bot, message)
+		bot.call_handler("achv-give-achievement", message)
 		return
 
 	
@@ -161,3 +162,5 @@ def get_title(bot, message):
 
 	bot.telegram.send_message(message.u_id, "Готово")
 	bot.telegram.send_message(user["id"], "У тебя новая ачивка")
+
+	bot.call_handler("main-menu", message)
