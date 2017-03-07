@@ -152,6 +152,9 @@ def select_user(bot, query):
 	bot.user_set(query.u_id, "next_handler", "achv-get-title")
 
 def get_title(bot, message):
+	NEW_ACHIEVEMENT_MESSAGE = jinja2.Template(random.choice(bot.const["achievements-new-achievement"]))
+	READY_MESSAGE = bot.const["achievement-ready"]
+
 	user = bot.user_get(message.u_id, "achievements_user")	
 	achievements = bot.user_get(user["id"], "achievements")
 	
@@ -160,7 +163,9 @@ def get_title(bot, message):
 
 	bot.user_set(message.u_id, "achievements", achievements)
 
-	bot.telegram.send_message(message.u_id, "Готово")
-	bot.telegram.send_message(user["id"], "У тебя новая ачивка")
+	bot.telegram.send_message(message.u_id, READY_MESSAGE)
+	bot.telegram.send_message(user["id"], 
+							NEW_ACHIEVEMENT_MESSAGE.render(achievement=message.text),
+							parse_mode = "Markdown")
 
 	bot.call_handler("main-menu", message)
