@@ -96,6 +96,7 @@ class Bot:
 
     def process_callback(self, query):
         query.u_id = query.message.chat.id
+        query.message.u_id = query.u_id
         if query.data:
             callback = query.data.split("/")[0]
             try:

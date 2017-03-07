@@ -57,6 +57,8 @@
 	"sex-keyboard": [[["Мальчик 👨‍💻", true], ["Девочка 👩‍💻", false]],
 					[["Отмена ↩️", "cancel"]]],
 	
-	"cancel-keyboard": [[["Отмена ↩️", "cancel"]]]
+	"cancel-keyboard": [[["Отмена ↩️", "cancel"]]],
+
+	"back-to-menu-keyboard": [[["Меню 🏠", "menu"]]]
 
 }
