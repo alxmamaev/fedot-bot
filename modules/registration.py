@@ -24,20 +24,22 @@ def get_name(bot, message):
 	GET_SEX_MESSAGE = random.choice(bot.const["registration-get-sex"])
 	SEX_KEYBOARD = bot.get_keyboard(bot.const["sex-keyboard"])
 
-	user_name = message.text
+	if not message.is_forward: 
+		user_name = message.text
 
-	#validation
-	if len(user_name.split())!=2:
-		start(bot, message)
-		return
+		#validation
+		if len(user_name.split())!=2:
+			message.is_forward = True
+			start(bot, message)
+			return
 
-	#save to redis
-	user_info = {
-		"id": message.u_id,
-		"username": message.from_user.username,
-		"name": user_name
-	}
-	bot.user_set(message.u_id, "info", user_info)
+		#save to redis
+		user_info = {
+			"id": message.u_id,
+			"username": message.from_user.username,
+			"name": user_name
+		}
+		bot.user_set(message.u_id, "info", user_info)
 
 	#ask next question
 	bot.telegram.send_message(message.u_id, GET_SEX_MESSAGE, reply_markup = SEX_KEYBOARD)
@@ -45,22 +47,29 @@ def get_name(bot, message):
 
 def get_sex(bot, message):
 	#constants
-	GET_AGE_MESSAGE = bot.const["registration-get-age"]
+	GET_AGE_MESSAGE = random.choice(bot.const["registration-get-age"])
+	CANCEL_KEYBOARD = bot.get_keyboard(bot.const["cancel-keyboard"])
 
-	user_sex = bot.get_key(bot.const["sex-keyboard"], message.text)
-	
-	# validation
-	if user_sex is None:
-		start(bot, message)
-		return
-	
-	#save to redis
-	user_info = bot.user_get(message.u_id, "info")
-	user_info["sex"] = user_sex
-	bot.user_set(message.u_id, "info", user_info)
+	if not message.is_forward:
+		user_sex = bot.get_key(bot.const["sex-keyboard"], message.text)
+
+		if user_sex == "cancel":
+			message.is_forward = True
+			start(bot, message)
+			return
+		
+		# validation
+		if user_sex is None:
+			get_name(bot, message)
+			return
+		
+		#save to redis
+		user_info = bot.user_get(message.u_id, "info")
+		user_info["sex"] = user_sex
+		bot.user_set(message.u_id, "info", user_info)
 
 	#ask next question
-	bot.telegram.send_message(message.u_id, GET_AGE_MESSAGE, reply_markup=telebot.types.ReplyKeyboardRemove())
+	bot.telegram.send_message(message.u_id, GET_AGE_MESSAGE, reply_markup=CANCEL_KEYBOARD)
 	bot.user_set(message.u_id, "next_handler", "reg-get-age")
 
 def get_age(bot, message):
@@ -68,28 +77,40 @@ def get_age(bot, message):
 	GET_QUAD_MESSAGE = bot.const["registration-get-quad"]
 	QUADS_KEYBOARD = bot.get_keyboard(bot.const["quads-keyboard"])
 
-	user_age = message.text
+	if not message.is_forward:
+		user_age = message.text
 
-	#validation
-	if not user_age.isdigit() and 12<int(user_age)<20:
-		get_sex(bot, None)
-		return
+		if user_age == "cancel":
+			message.is_forward = True
+			start(bot, message)
+			return
 
-	#save to redis
-	user_info = bot.user_get(message.u_id, "info")
-	user_info["age"] = user_age
-	bot.user_set(message.u_id, "info", user_info)
+		#validation
+		if not user_age.isdigit() or not 12<int(user_age)<20:
+			message.is_forward = True
+			get_sex(bot, message)
+			return
+
+		#save to redis
+		user_info = bot.user_get(message.u_id, "info")
+		user_info["age"] = int(user_age)
+		bot.user_set(message.u_id, "info", user_info)
 
 	#ask next question
 	bot.telegram.send_message(message.u_id, GET_QUAD_MESSAGE, reply_markup=QUADS_KEYBOARD)
 	bot.user_set(message.u_id, "next_handler", "reg-get-quad")
 
 def get_quad(bot, message):
-	user_quad = message.text
+	user_quad = bot.get_key(bot.const["quads-keyboard"], message.text)
+
+	if user_quad == "cancel":
+		start(bot, message)
+		return
 
 	#validation
-	if bot.get_key(bot.const["quads-keyboard"], user_quad) is None:
-		get_sex(bot, None)
+	if user_quad is None:
+		message.is_forward = True
+		get_sex(bot, message)
 		return
 
 	#save to redis
@@ -106,4 +127,4 @@ def get_quad(bot, message):
 	#end of questioning
 	bot.telegram.send_message(message.u_id, "Все ок", reply_markup=telebot.types.ReplyKeyboardRemove())
 	bot.user_set(message.u_id, "next_handler", "")
-	bot.call_handler("main-menu")
+	bot.call_handler("main-menu", message)

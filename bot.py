@@ -81,6 +81,7 @@ class Bot:
 
     def process_message(self, message):
         message.u_id = message.chat.id
+        message.is_forward = False
         if message.text == self.MENU_BUTTON: self.user_set(message.u_id, "next_handler", self.default_handler)
         current_handler = self.user_get(message.u_id, "next_handler", default="") or self.default_handler
         self.user_set(message.u_id, "next_handler", self.default_handler)

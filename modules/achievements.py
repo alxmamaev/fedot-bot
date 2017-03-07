@@ -25,7 +25,7 @@ def get_inline_navigation(users, cur_user):
 
 	control_panel = []
 	if cur_user != 0: control_panel.append(back_button)
-	if cur_entrie != entries_count-1: control_panel.append(next_button)
+	if cur_user != len(users)-1: control_panel.append(next_button)
 	markup.row(*control_panel)
 	markup.row(chouse_user)
 
@@ -50,23 +50,34 @@ def get_achievements(bot, message):
 # Give achievement
 
 def get_username(bot, message):
+	#constants
 	GET_USERNAME_MESSAGE = bot.const["achievements-get-username"]
 	
+	#send start message
 	keyboard = bot.get_keyboard(STANDART_KEYBOARD)
 	bot.telegram.send_message(message.u_id, GET_USERNAME_MESSAGE,  reply_markup = keyboard)
 
 	bot.user_set(message.u_id, "next_handler", "achv-choose-user")
 
 def choose_user(bot, message):
+	#constants
 	USER_NOT_FOUND_MESSAGE = bot.const["achievements-user-not-found"]
 	USER_INFO_MESSAGE = jinja2.Template(bot.const["achievements-user-info"])
+	QUADS = bot.const["quads"]
 
-	username = message.text.lower()
-	users = json.loads(bot.redis.get("users") or "[]")
+	#search users
+	username = message.text.lower().replace("@", "")
+	name = message.text.lower()
+
+	users = bot.user_get(0, "users")
 	found_users = []
-
+	print(username, name)
+	print()
+	print(users)
 	for user in users:
-		if username in user["name"].lower() or username in user["username"].lower(): found_users.append(user_info)
+		if name in user["name"].lower() or username in user["username"].lower(): 
+			user["quad"] = QUADS.get(user["quad"], "Не определен")
+			found_users.append(user)
 
 
 	if not found_users: 
@@ -79,7 +90,10 @@ def choose_user(bot, message):
 
 
 	markup = get_inline_navigation(found_users, 0)
-	bot.telegram.send_message(message.u_id, USER_INFO_MESSAGE.render(**found_users[0]), reply_markup)
+	bot.telegram.send_message(message.u_id, 
+							USER_INFO_MESSAGE.render(**found_users[0]), 
+							reply_markup = markup,
+							parse_mode = "Markdown")
 
 def next_user(bot, query):
 	USER_INFO_MESSAGE = jinja2.Template(bot.const["achievements-user-info"])
