@@ -44,7 +44,7 @@ def get_achievements(bot, message):
 	if not achievements: achievements_message = random.choice(NOT_FOUND_MESSAGES)
 	else: achievements_message = ACHIEVMENTS_LIST_MESSAGE.render(achievements=achievements)
 
-	bot.telegram.send_message(message.u_id, achievements_message)
+	bot.telegram.send_message(message.u_id, achievements_message, parse_mode = "Markdown") 
 
 
 
