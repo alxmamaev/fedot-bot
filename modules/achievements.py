@@ -77,7 +77,7 @@ def get_username(bot, message):
 	found_users = []
 
 	for user in users:
-		if name in user["name"].lower() or username in user["username"].lower(): 
+		if name in user["name"].lower() or (user["username"] and username in user["username"].lower()): 
 			user["quad"] = QUADS.get(user["quad"], "Не определен")
 			found_users.append(user)
 
