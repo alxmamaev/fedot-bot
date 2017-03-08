@@ -101,6 +101,8 @@ def get_age(bot, message):
 	bot.user_set(message.u_id, "next_handler", "reg-get-quad")
 
 def get_quad(bot, message):
+	READY_MESSAGE = random.choice(bot.const["ready"])
+
 	user_quad = bot.get_key(bot.const["quads-keyboard"], message.text)
 
 	if user_quad == "cancel":
@@ -125,6 +127,6 @@ def get_quad(bot, message):
 	bot.user_set(message.u_id, "register", True)	
 
 	#end of questioning
-	bot.telegram.send_message(message.u_id, "Все ок", reply_markup=telebot.types.ReplyKeyboardRemove())
+	bot.telegram.send_message(message.u_id, READY_MESSAGE, reply_markup=telebot.types.ReplyKeyboardRemove())
 	bot.user_set(message.u_id, "next_handler", "")
 	bot.call_handler("main-menu", message)

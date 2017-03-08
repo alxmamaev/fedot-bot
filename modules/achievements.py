@@ -155,7 +155,7 @@ def select_user(bot, query):
 
 def get_title(bot, message):
 	NEW_ACHIEVEMENT_MESSAGE = jinja2.Template(random.choice(bot.const["achievements-new-achievement"]))
-	READY_MESSAGE = bot.const["achievement-ready"]
+	READY_MESSAGE = random.choice(bot.const["ready"])
 
 	user = bot.user_get(message.u_id, "achievements_user")	
 	achievements = bot.user_get(user["id"], "achievements")
