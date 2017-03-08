@@ -21,8 +21,8 @@ def start(bot, message):
 
 def get_inline_navigation(users, cur_user):
 	markup = telebot.types.InlineKeyboardMarkup(row_width=3)
-	next_button = telebot.types.InlineKeyboardButton("Далее ⏩",callback_data="achv-news-user/next")
-	back_button = telebot.types.InlineKeyboardButton("⏪ Назад",callback_data="achv-news-user/last")
+	next_button = telebot.types.InlineKeyboardButton("Далее ⏩",callback_data="achv-next-user/next")
+	back_button = telebot.types.InlineKeyboardButton("⏪ Назад",callback_data="achv-next-user/last")
 	chouse_user = telebot.types.InlineKeyboardButton("Выбрать ☝🏻", callback_data="achv-select-user")
 
 	control_panel = []
@@ -112,7 +112,7 @@ def next_user(bot, query):
 	cur_user = bot.user_get(query.u_id, "achievements_cur_user")
 
 	#choose next user
-	if query.data.split("/") == "next": cur_user+=1
+	if query.data.split("/")[1] == "next": cur_user+=1
 	else: cur_user-=1
 
 	#save to redis
@@ -121,9 +121,11 @@ def next_user(bot, query):
 	#edit message
 	INLINE_NAVIGATION = get_inline_navigation(users, cur_user)
 	
-	bot.telegram.edit_message(message_id=query.message, 
+	bot.telegram.edit_message_text(chat_id = query.u_id,
+							message_id=query.message.message_id, 
 							text=USER_INFO_MESSAGE.render(**users[cur_user]),
-							reply_markup=INLINE_NAVIGATION)	
+							reply_markup=INLINE_NAVIGATION,
+							parse_mode = "Markdown")	
 
 def select_user(bot, query):
 	#constants
@@ -161,7 +163,7 @@ def get_title(bot, message):
 	if achievements: achievements.append(message.text)
 	else: achievements = [message.text]
 
-	bot.user_set(message.u_id, "achievements", achievements)
+	bot.user_set(user["id"], "achievements", achievements)
 
 	bot.telegram.send_message(message.u_id, READY_MESSAGE)
 	bot.telegram.send_message(user["id"], 
