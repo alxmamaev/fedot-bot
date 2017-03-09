@@ -65,8 +65,8 @@ def give_achievement(bot, message):
 
 def get_username(bot, message):	
 	#constants
-	USER_NOT_FOUND_MESSAGE = bot.const["achievements-user-not-found"]
-	USER_INFO_MESSAGE = jinja2.Template(bot.const["achievements-user-info"])
+	USER_NOT_FOUND_MESSAGE = bot.const["user-not-found"]
+	USER_INFO_MESSAGE = jinja2.Template(bot.const["user-info"])
 	QUADS = bot.const["quads"]
 
 	#search users
@@ -78,7 +78,7 @@ def get_username(bot, message):
 
 	for user in users:
 		if name in user["name"].lower() or (user["username"] and username in user["username"].lower()): 
-			user["quad"] = QUADS.get(user["quad"], "Не определен")
+			user["quad"] = QUADS.get(user["quad"], "None")
 			found_users.append(user)
 
 	
@@ -105,7 +105,7 @@ def get_username(bot, message):
 
 def next_user(bot, query):
 	#constants
-	USER_INFO_MESSAGE = jinja2.Template(bot.const["achievements-user-info"])
+	USER_INFO_MESSAGE = jinja2.Template(bot.const["user-info"])
 
 	#read from redis
 	users = bot.user_get(query.u_id, "achievements_found_users")
@@ -129,7 +129,7 @@ def next_user(bot, query):
 
 def select_user(bot, query):
 	#constants
-	USER_INFO_MESSAGE = jinja2.Template(bot.const["achievements-user-info"])
+	USER_INFO_MESSAGE = jinja2.Template(bot.const["user-info"])
 	GET_ACHIEVMENT_TITLE_MESSAGE = bot.const["achievements-get-title"]
 	BACK_TO_MENU_KEYBOARD = bot.get_keyboard(bot.const["back-to-menu-keyboard"])
 
