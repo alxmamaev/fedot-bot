@@ -5,44 +5,99 @@
 	<title>BotFedot.Admin</title>
 
 	<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+	<link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-	<div class="modal fade" id="modal">
+	<div class="modal fade" id="modal-edit">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="input-group date" data-provide="datepicker">
-						<input type="text" class="form-control">
-						<div class="input-group-addon">
-							<span class="glyphicon glyphicon-th"></span>
+			<form method="post" action="/add">
+				<input type="hidden" class="id-item" name="id">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="modal-title">Edit Item</h5>
+					</div>
+					<div class="modal-body">
+						<div class="input-group date" data-provide="datepicker">
+							<span class="input-group-addon">Date</span>
+							<input type="text" class="form-control date-item" name="date">
+							<div class="input-group-addon">
+								<span class="glyphicon glyphicon-th"></span>
+							</div>
+						</div>
+						<br>
+						<div class="input-group">
+							<span class="input-group-addon">Label</span>
+							<input class="form-control label-item" type="text" name="label">
 						</div>
 					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<input type="submit" value="Save changes" class="btn btn-primary"></button>
+					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
-				</div>
-			</div>
+			</form>
 		</div>
 	</div>
-		
+	
+	<div class="modal fade" id="modal-add">
+		<div class="modal-dialog" role="document">
+			<form method="post" action="/edit">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="modal-title">Add Item</h5>
+					</div>
+					<div class="modal-body">
+						<div class="input-group date" data-provide="datepicker">
+							<span class="input-group-addon">Date</span>
+							<input type="text" class="form-control" name="date" class="date-item">
+							<div class="input-group-addon">
+								<span class="glyphicon glyphicon-th"></span>
+							</div>
+						</div>
+						<br>
+						<div class="input-group">
+							<span class="input-group-addon">Label</span>
+							<input class="form-control" type="text" name="label" class="label-item">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<input type="submit" value="Create" class="btn btn-primary"></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
 	<div class="container">
 		<h1>List</h1>
 
-		<div class="list-group">
-			<div class="list-group-item active">
-				<h4 class="list-group-item-heading">List group item heading</h4>
-				<p class="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab impedit, culpa. Nulla excepturi nobis ea soluta veritatis iste, quibusdam voluptatem non temporibus, voluptates mollitia modi nam quidem incidunt perspiciatis praesentium.</p>
-			</div>
-		</div>
+		<ul class="list-group">
+			<li class="list-group-item">
+				<button id="add-item" type="button" class="btn btn-default">Add Item</button>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+		</ul>
 	</div>
 
 	<script src="../bower_components/jquery/dist/jquery.min.js"></script>
