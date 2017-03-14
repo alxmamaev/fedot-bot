@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>BotFedot.Admin</title>
+
+	<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+	<div class="modal fade" id="modal-edit">
+		<div class="modal-dialog" role="document">
+			<form method="post" action="/edit">
+				<input type="hidden" class="id-item" name="id">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="modal-title">Edit Item</h5>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<div class='input-group date' id='edit-date-time-picker'>
+								<input type='text' class="form-control date-item" name="date"/>
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</div>
+						<br>
+						<div class="input-group">
+							<span class="input-group-addon">Label</span>
+							<input class="form-control label-item" type="text" name="label">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<input type="submit" value="Save changes" class="btn btn-primary"></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="modal-add">
+		<div class="modal-dialog" role="document">
+			<form method="post" action="/add">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="modal-title">Add Item</h5>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<div class='input-group date' id="add-date-time-picker">
+								<input type='text' class="form-control date-item" name="date"/>
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+						</div>
+						<br>
+						<div class="input-group">
+							<span class="input-group-addon">Label</span>
+							<input class="form-control" type="text" name="label" class="label-item">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<input type="submit" value="Create" class="btn btn-primary"></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="container">
+		<h1>List</h1>
+
+		<ul class="list-group">
+			<li class="list-group-item">
+				<button id="add-item" type="button" class="btn btn-default">Add Item</button>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+			<li class="list-group-item item">
+				<span class="badge date-item">03/08/2017</span>
+				<span class="label-item">Cras justo odio</span>
+			</li>
+		</ul>
+	</div>
+
+	<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="../bower_components/moment/min/moment.min.js"></script>
+	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>

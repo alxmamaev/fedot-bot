@@ -1,0 +1,10 @@
+{
+  "name": "fedot-bot",
+  "homepage": "https://github.com/alxmamaev/fedot-bot",
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "bootstrap": "^3.3.7",
+    "bootstrap-datepicker": "^1.6.4",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.47"
+  }
+}
