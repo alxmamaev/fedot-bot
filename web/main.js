@@ -4,6 +4,13 @@ $(function () {
 	var $items = $('.item');
 	var $addItem = $('#add-item');
 
+	$('#edit-date-time-picker').datetimepicker({
+		sideBySide: true
+	});
+	$('#add-date-time-picker').datetimepicker({
+		sideBySide: true
+	});
+
 	$items.on('click', function() {
 		$items.removeClass('active');
 		$(this).addClass('active');
