@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-?
 import os
 import sys
+import datetime
+import base
 import flask
 import telebot
 import logging
@@ -9,6 +11,7 @@ from bot import Bot
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 
 app = flask.Flask(__name__)
+app.jinja_env.add_extension('pyjade.ext.jinja.PyJadeExtension')
 
 @app.route("/bot/<token>", methods=['POST'])
 def getMessage(token):
@@ -16,10 +19,44 @@ def getMessage(token):
         update = telebot.types.Update.de_json(flask.request.stream.read().decode("utf-8"))
         bot.proсess_updates(update)
         return "", 200
-
+ 
 @app.route("/")
 def webhook():
     return "Welcome.\n", 200
+
+
+#SHEDULE
+@app.route("/shedule")
+def shedule():
+    return flask.render_template("shedule.jade", list=[])
+
+@app.route("/shedule/add", methods = ["POST"])
+def shedule_add():
+    event_id = flask.request.form["id"]
+    event_date, event_time = flask.request.form["datetime"].split()
+    title = flask.request.form["title"]
+
+    base.add(bot=bot, event_id, title, event_date, event_time)
+    return flask.redirect("/shedule")
+
+@app.route("/shedule/edit", methods = ["POST"])
+def shedule_edit():
+    event_id = flask.request.form["id"]
+    event_date, event_time = flask.request.form["datetime"].split()
+    title = flask.request.form["title"]
+
+    base.delete(bot, event_id)
+    base.add(bot, event_id, title, event_date, event_time)
+    return flask.redirect("/shedule")
+
+@app.route("/shedule/delete", methods = ["POST"])
+def shedule_edit():
+    event_id = flask.request.form["id"]
+    event_date, event_time = flask.request.form["datetime"].split()
+    title = flask.request.form["title"]
+
+    base.delete(bot, event_id)
+    return flask.redirect("/shedule")
 
 if __name__=="__main__":
     print("Creating bot")

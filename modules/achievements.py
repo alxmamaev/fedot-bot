@@ -155,9 +155,12 @@ def select_user(bot, query):
 
 def get_title(bot, message):
 	NEW_ACHIEVEMENT_MESSAGE = jinja2.Template(random.choice(bot.const["achievements-new-achievement"]))
+	USER_GET_ACHIEVEMENT_MESSAGE = jinja2.Template(bot.const["achievements-user-get-achievement"])
 	READY_MESSAGE = random.choice(bot.const["ready"])
 
 	user = bot.user_get(message.u_id, "achievements_user")	
+	users = bot.user_get(0, "users")
+
 	achievements = bot.user_get(user["id"], "achievements")
 	
 	if achievements: achievements.append(message.text)
@@ -168,6 +171,12 @@ def get_title(bot, message):
 	bot.telegram.send_message(message.u_id, READY_MESSAGE)
 	bot.telegram.send_message(user["id"], 
 							NEW_ACHIEVEMENT_MESSAGE.render(achievement=message.text),
+							parse_mode = "Markdown")
+
+	for u in users:
+		if u["id"] != user["id"]:
+			bot.telegram.send_message(u["id"], 
+							USER_GET_ACHIEVEMENT_MESSAGE.render(name = user["name"], achievement=message.text),
 							parse_mode = "Markdown")
 
 	bot.call_handler("main-menu", message)

@@ -101,23 +101,37 @@ def get_age(bot, message):
 	bot.user_set(message.u_id, "next_handler", "reg-get-quad")
 
 def get_quad(bot, message):
-	READY_MESSAGE = random.choice(bot.const["ready"])
+	GET_PLACE_MESSAGE = bot.const["registration-get-place"]
+	CANCEL_KEYBOARD = bot.get_keyboard(bot.const["cancel-keyboard"])
 
 	user_quad = bot.get_key(bot.const["quads-keyboard"], message.text)
 
-	if user_quad == "cancel":
-		start(bot, message)
-		return
+	if not message.is_forward:
+		if user_quad == "cancel":
+			start(bot, message)
+			return
 
-	#validation
-	if user_quad is None:
-		message.is_forward = True
-		get_sex(bot, message)
-		return
+		#validation
+		if user_quad is None:
+			message.is_forward = True
+			get_sex(bot, message)
+			return
 
 	#save to redis
 	user_info = bot.user_get(message.u_id, "info")
 	user_info["quad"] = user_quad
+	bot.user_set(message.u_id, "info", user_info)
+
+	#ask next question
+	bot.telegram.send_message(message.u_id, GET_PLACE_MESSAGE, reply_markup = CANCEL_KEYBOARD, parse_mode = "Markdown")
+	bot.user_set(message.u_id, "next_handler", "reg-get-place")
+
+def get_place(bot, message):
+	READY_MESSAGE = random.choice(bot.const["ready"])	
+
+	#save to redis
+	user_info = bot.user_get(message.u_id, "info")
+	user_info["place"] = message.text
 	bot.user_delete(message.u_id, "info")
 
 	#register new user
