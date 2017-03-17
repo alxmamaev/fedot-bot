@@ -8,13 +8,20 @@ def add(bot, event_id, title, event_date, event_time):
     shedule = bot.user_get(0, "shedule") or {}
     day_key = event_date
 
-    day_shedule = shedule.get(day_key, default = [])
+    day_shedule = shedule.get(day_key, [])
     for i, event in enumerate(day_shedule):
-        day_shedule[i] = time.strptime(event["time"], "%H:%M")
+        event["time"] = time.strptime(event["time"], "%H:%M")
+        day_shedule[i] = event
 
+    day_shedule.append(new_event)
     day_shedule.sort(key = lambda x: x["time"])
-    shedule[day_key] = day_shedule
 
+    for i, event in enumerate(day_shedule):
+        event["time"] = time.strftime("%H:%M", event["time"])
+        day_shedule[i] = event
+
+
+    shedule[day_key] = day_shedule
     shedule = bot.user_set(0, "shedule", shedule)
 
 def delete(bot, event_id):

@@ -36,7 +36,7 @@ def shedule_add():
     event_date, event_time = flask.request.form["datetime"].split()
     title = flask.request.form["title"]
 
-    base.add(bot=bot, event_id, title, event_date, event_time)
+    base.add(bot, event_id, title, event_date, event_time)
     return flask.redirect("/shedule")
 
 @app.route("/shedule/edit", methods = ["POST"])
@@ -50,13 +50,14 @@ def shedule_edit():
     return flask.redirect("/shedule")
 
 @app.route("/shedule/delete", methods = ["POST"])
-def shedule_edit():
+def shedule_delete():
     event_id = flask.request.form["id"]
     event_date, event_time = flask.request.form["datetime"].split()
     title = flask.request.form["title"]
 
     base.delete(bot, event_id)
     return flask.redirect("/shedule")
+
 
 if __name__=="__main__":
     print("Creating bot")
