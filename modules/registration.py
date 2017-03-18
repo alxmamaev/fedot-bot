@@ -9,6 +9,7 @@ def init(bot):
 	bot.handlers["reg-get-sex"]	= get_sex
 	bot.handlers["reg-get-age"] = get_age
 	bot.handlers["reg-get-quad"] = get_quad
+	bot.handlers["reg-get-place"] = get_place
 
 def start(bot, message):
 	GET_NAME_MESSAGE = random.choice(bot.const["registration-get-name"])

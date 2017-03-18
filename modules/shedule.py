@@ -1,3 +1,7 @@
+import base
+import time
+import jinja2
+
 example_message = """*Расписание* на утро 🌝 
 
 08:30 - 09:00 
@@ -16,7 +20,14 @@ example_message = """*Расписание* на утро 🌝
 """
 
 def init(bot):
-	bot.handlers["sdhl-start"] = start
+	bot.handlers["shed-start"] = start
 
 def start(bot, message):
-	bot.telegram.send_message(message.u_id ,example_message, parse_mode="Markdown")
+	SHEDULE_MESSAGE = jinja2.Template("{% for event in shedule %}{{event.time}}\n\t\t{{event.title}}\n\n{% endfor %}")
+	cur_date = time.strftime("%d.%m.%Y")
+	shedule = base.get_day_shedule(bot, cur_date)
+
+	if shedule: reply_message = SHEDULE_MESSAGE.render(shedule=shedule)
+	else: reply_message = "Ничего нет"
+
+	bot.telegram.send_message(message.u_id, reply_message, parse_mode="Markdown")

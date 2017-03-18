@@ -3,7 +3,8 @@ import time
 def add(bot, event_id, title, event_date, event_time):
     new_event = {"title":title, 
                 "time": time.strptime(event_time,"%H:%M"),
-                "id": event_id}
+                "id": event_id,
+                "type": "will"}
 
     shedule = bot.user_get(0, "shedule") or {}
     day_key = event_date
@@ -38,3 +39,9 @@ def delete(bot, event_id):
         break
 
     bot.user_set(0, "shedule", shedule)
+
+def get_day_shedule(bot, day_key):
+    shedule = bot.user_get(0, "shedule") or {}
+    day_shedule = shedule.get(day_key, [])
+
+    return day_shedule
