@@ -9,19 +9,17 @@ html(lang='en')
 	body
 		#modal-edit.modal.fade
 			.modal-dialog
-				form(method='post', action='/edit')
+				form(method='post', action='/shedule/edit')
 					input.id-item(type='hidden', name='id')
 					.modal-content
 						.modal-header
-							h2.modal-title
-								| Edit Item
+							h2.modal-title Edit Item
 						.modal-body
 							.form-group
 								#edit-date-time-picker.input-group.date
 									input.form-control.date-item(type='text', name='date')
 									span.input-group-addon
 										span.glyphicon.glyphicon-calendar
-							br
 							.input-group
 								span.input-group-addon Label
 								input.form-control.label-item(type='text', name='label')
@@ -30,7 +28,7 @@ html(lang='en')
 							input.btn.btn-primary(type='submit', value='Save changes')
 		#modal-add.modal.fade
 			.modal-dialog
-				form(method='post', action='/add')
+				form(method='post', action='/shedule/add')
 					.modal-content
 						.modal-header
 							h2.modal-title Add Item
