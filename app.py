@@ -37,13 +37,13 @@ def shedule_add():
     event_date, event_time = flask.request.form["date"].split()
     title = flask.request.form["title"]
 
-    base.add(bot, event_id, title, event_date, event_time, time_type)
+    base.add(bot, event_id, title, event_date, event_time)
     return flask.redirect("/shedule")
 
 @app.route("/shedule/edit", methods = ["POST"])
 def shedule_edit():
     event_id = flask.request.form["id"]
-    print(flask.request.form222222)
+    print(flask.request.form)
     event_date, event_time = flask.request.form["date"].split()
     title = flask.request.form["title"]
 
