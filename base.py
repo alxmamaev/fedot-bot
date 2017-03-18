@@ -1,8 +1,8 @@
 import time
 
-def add(bot, event_id, title, event_date, event_time, time_type):
+def add(bot, event_id, title, event_date, event_time):
     new_event = {"title":title, 
-                "time": time.strptime(event_time+" "+time_type,"%I:%M %p"),
+                "time": time.strptime(event_time,"%H:%M"),
                 "id": event_id,
                 "type": "will"}
 

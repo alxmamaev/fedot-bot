@@ -34,7 +34,7 @@ def shedule():
 @app.route("/shedule/add", methods = ["POST"])
 def shedule_add():
     event_id = str(random.randint(10,10000000))
-    event_date, event_time, time_type = flask.request.form["date"].split()
+    event_date, event_time = flask.request.form["date"].split()
     title = flask.request.form["title"]
 
     base.add(bot, event_id, title, event_date, event_time, time_type)
@@ -43,11 +43,12 @@ def shedule_add():
 @app.route("/shedule/edit", methods = ["POST"])
 def shedule_edit():
     event_id = flask.request.form["id"]
-    event_date, event_time, time_type = flask.request.form["date"].split()
+    print(flask.request.form222222)
+    event_date, event_time = flask.request.form["date"].split()
     title = flask.request.form["title"]
 
     base.delete(bot, event_id)
-    base.add(bot, event_id, title, event_date, event_time, time_type)
+    base.add(bot, event_id, title, event_date, event_time)
     return flask.redirect("/shedule")
 
 @app.route("/shedule/delete", methods = ["POST"])

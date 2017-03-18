@@ -5,9 +5,11 @@ $(function () {
 	var $addItem = $('#add-item');
 
 	$('#edit-date-time-picker').datetimepicker({
+		format: 'DD.MM.YYYY hh:mm',
 		sideBySide: true
 	});
 	$('#add-date-time-picker').datetimepicker({
+		format: 'DD.MM.YYYY hh:mm',
 		sideBySide: true
 	});
 
