@@ -7,6 +7,7 @@ import flask
 import telebot
 import logging
 from bot import Bot
+import random
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 
@@ -32,28 +33,26 @@ def shedule():
 
 @app.route("/shedule/add", methods = ["POST"])
 def shedule_add():
-    event_id = flask.request.form["id"]
-    event_date, event_time = flask.request.form["datetime"].split()
+    event_id = str(random.randint(10,10000000))
+    event_date, event_time, time_type = flask.request.form["date"].split()
     title = flask.request.form["title"]
 
-    base.add(bot, event_id, title, event_date, event_time)
+    base.add(bot, event_id, title, event_date, event_time, time_type)
     return flask.redirect("/shedule")
 
 @app.route("/shedule/edit", methods = ["POST"])
 def shedule_edit():
     event_id = flask.request.form["id"]
-    event_date, event_time = flask.request.form["datetime"].split()
+    event_date, event_time, time_type = flask.request.form["date"].split()
     title = flask.request.form["title"]
 
     base.delete(bot, event_id)
-    base.add(bot, event_id, title, event_date, event_time)
+    base.add(bot, event_id, title, event_date, event_time, time_type)
     return flask.redirect("/shedule")
 
 @app.route("/shedule/delete", methods = ["POST"])
 def shedule_delete():
     event_id = flask.request.form["id"]
-    event_date, event_time = flask.request.form["datetime"].split()
-    title = flask.request.form["title"]
 
     base.delete(bot, event_id)
     return flask.redirect("/shedule")
