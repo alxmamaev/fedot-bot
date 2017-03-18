@@ -45,3 +45,14 @@ def get_day_shedule(bot, day_key):
     day_shedule = shedule.get(day_key, [])
 
     return day_shedule
+
+def get_shedule(bot):
+    shedule = bot.user_get(0, "shedule") or {}
+    shedule_list = []
+
+    for day in shedule:
+        for event in shedule[day]:
+            event["date"] = day + " " + event["time"]
+            shedule_list.append(event)
+
+    return shedule_list

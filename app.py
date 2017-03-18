@@ -29,7 +29,7 @@ def webhook():
 #SHEDULE
 @app.route("/shedule")
 def shedule():
-    return flask.render_template("shedule.jade", list=[])
+    return flask.render_template("shedule.jade", list=base.get_shedule(bot))
 
 @app.route("/shedule/add", methods = ["POST"])
 def shedule_add():
