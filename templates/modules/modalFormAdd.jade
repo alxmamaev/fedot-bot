@@ -1,0 +1,19 @@
+#modal-add.modal.fade
+	.modal-dialog
+		form(method='POST', action='/shedule/add')
+			.modal-content
+				.modal-header
+					h2.modal-title Add Item
+				.modal-body
+					.form-group
+						#add-date-time-picker.input-group.date
+							input.form-control.date-item(type='text', name='date')
+							span.input-group-addon
+								span.glyphicon.glyphicon-calendar
+					br
+					.input-group
+						span.input-group-addon Label
+						input.form-control(type='text', name='label')
+				.modal-footer
+					button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+					input.btn.btn-primary(type='submit', value='Create')

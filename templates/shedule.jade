@@ -1,64 +1,17 @@
-doctype html
-html(lang='en')
-	head
-		meta(charset='UTF-8')
-		title BotFedot.Admin
-		link(rel='stylesheet', href='../static/bower_components/bootstrap/dist/css/bootstrap.min.css')
-		link(rel='stylesheet', href='../static/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')
-		link(rel='stylesheet', href='../static/css/main.css')
-	body
-		#modal-edit.modal.fade
-			.modal-dialog
-				form(method='post', action='/shedule/edit')
-					input.id-item(type='hidden', name='id')
-					.modal-content
-						.modal-header
-							h2.modal-title Edit Item
-						.modal-body
-							.form-group
-								#edit-date-time-picker.input-group.date
-									input.form-control.date-item(type='text', name='date')
-									span.input-group-addon
-										span.glyphicon.glyphicon-calendar
-							.input-group
-								span.input-group-addon Label
-								input.form-control.label-item(type='text', name='label')
-						.modal-footer
-							button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-							input.btn.btn-primary(type='submit', value='Save changes')
-		#modal-add.modal.fade
-			.modal-dialog
-				form(method='post', action='/shedule/add')
-					.modal-content
-						.modal-header
-							h2.modal-title Add Item
-						.modal-body
-							.form-group
-								#add-date-time-picker.input-group.date
-									input.form-control.date-item(type='text', name='date')
-									span.input-group-addon
-										span.glyphicon.glyphicon-calendar
-							br
-							.input-group
-								span.input-group-addon Label
-								input.form-control(type='text', name='label')
-						.modal-footer
-							button.btn.btn-secondary(type='button', data-dismiss='modal') Close
-							input.btn.btn-primary(type='submit', value='Create')
-		.container
-			h1 List
+extends layout
 
-			ul.list-group
-				li.list-group-item
-					button#add-item.btn.btn-default(type='button') Add Item
+block content
+	include modules/modalFormEdit
+	include modules/modalFormAdd
 
-				each item in list
-					li.list-group-item.item(id=item.id)
-						span.badge.date-item= item.date
-						span.label-item= item.label
+	.container
+		h1 List
 
-		script(src='../static/bower_components/jquery/dist/jquery.min.js')
-		script(src='../static/bower_components/moment/min/moment.min.js')
-		script(src='../static/bower_components/bootstrap/dist/js/bootstrap.min.js')
-		script(src='../static/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')
-		script(src='../static/js/main.js')
+		ul.list-group
+			li.list-group-item
+				button#add-item.btn.btn-default(type='button') Add Item
+
+			each item in list
+				li.list-group-item.item(id=item.id)
+					span.badge.date-item= item.date
+					span.label-item= item.label
