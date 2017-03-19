@@ -36,3 +36,9 @@ h1 {
     width: 40%;
     line-height: 40px;
 }
+
+.logout {
+	position: fixed;
+	top: 40px;
+	right: 40px;
+}

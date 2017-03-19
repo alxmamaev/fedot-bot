@@ -4,6 +4,9 @@ block content
 	include modules/modalFormEdit
 	include modules/modalFormAdd
 
+	form.logout-form(method="POST", action="/logout")
+		input(class="btn btn-primary btn-lg logout", type="submit", value="Logout")
+
 	.container
 		h1 List
 
