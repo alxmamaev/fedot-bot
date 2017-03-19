@@ -17,3 +17,16 @@
 	margin-left: 10px;
 	font-size: 20px;
 }
+
+h1 {
+	margin-bottom: 50px;
+	margin-top: 20%;
+	text-align: center;
+}
+.menu-btn {
+	display: block;
+    margin: 10px auto;
+    height: 60px;
+    width: 40%;
+    line-height: 40px;
+}

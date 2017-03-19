@@ -2,5 +2,11 @@ extends layout
 
 block content
 	.container
-		a(href="/shedule") SHEDULE
-		a(href="/???") KUDA ESCHO TO? YA ZABIL :(
+		h1 FedotBot.Admin
+
+		a(class="btn btn-primary btn-lg menu-btn", href="/shedule")
+			span(class="glyphicon glyphicon-th-list", aria-hidden="true")
+			|  Shedule
+		a(class="btn btn-primary btn-lg menu-btn", href="/shedule")
+			span(class="glyphicon glyphicon-check", aria-hidden="true")
+			|  Quests
