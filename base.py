@@ -50,9 +50,19 @@ def get_shedule(bot):
     shedule = bot.user_get(0, "shedule") or {}
     shedule_list = []
 
+    sorted_shedule = []
     for day in shedule:
+        day_shedule = {"date":time.strptime(day, "%d.%m.%Y"), "events":[]}
         for event in shedule[day]:
             event["date"] = day + " " + event["time"]
-            shedule_list.append(event)
+            day_shedule["events"].append(event)
+
+        sorted_shedule.append(day_shedule)       
+
+    sorted_shedule.sort(key = lambda x: x["date"])
+
+    shedule_list = []
+    for day in sorted_shedule:
+        shedule_list += day["events"]
 
     return shedule_list

@@ -24,7 +24,7 @@ def init(bot):
 
 def start(bot, message):
 	SHEDULE_MESSAGE = jinja2.Template("{% for event in shedule %}{{event.time}}\n\t\t{{event.title}}\n\n{% endfor %}")
-	cur_date = time.strftime("%m/%d/%Y")
+	cur_date = time.strftime("%d.%m.%Y")
 	shedule = base.get_day_shedule(bot, cur_date)
 
 	if shedule: reply_message = SHEDULE_MESSAGE.render(shedule=shedule)

@@ -23,7 +23,7 @@ def getMessage(token):
  
 @app.route("/")
 def webhook():
-    return "Welcome.\n", 200
+    return flask.render_template("index.jade")
 
 
 #SHEDULE
