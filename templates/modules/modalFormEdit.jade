@@ -1,10 +1,10 @@
 #modal-edit.modal.fade
 	.modal-dialog
-		form(method='POST', action='/shedule/edit')
-			input.id-item(type='hidden', name='id')
-			.modal-content
-				.modal-header
-					h2.modal-title Edit Item
+		.modal-content
+			.modal-header
+				h2.modal-title Edit Item
+			form(method='POST', action='/shedule/edit')
+				input.id-item(type='hidden', name='id')
 				.modal-body
 					.form-group
 						#edit-date-time-picker.input-group.date
@@ -17,3 +17,7 @@
 				.modal-footer
 					button.btn.btn-secondary(type='button', data-dismiss='modal') Close
 					input.btn.btn-primary(type='submit', value='Save changes')
+
+			form(method='POST', action='/shedule/delete')						
+				input.id-item(type='hidden', name='id')
+				input.delete-item.btn.btn-danger(type='submit', value='Delete item')

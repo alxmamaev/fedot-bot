@@ -18,6 +18,12 @@
 	font-size: 20px;
 }
 
+.delete-item {
+	position: absolute;
+    bottom: 15px;
+    left: 15px;
+}
+
 h1 {
 	margin-bottom: 50px;
 	margin-top: 20%;
