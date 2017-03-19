@@ -20,8 +20,8 @@
 
 .delete-item {
 	position: absolute;
-    bottom: 15px;
-    left: 15px;
+	bottom: 15px;
+	left: 15px;
 }
 
 h1 {
@@ -31,14 +31,19 @@ h1 {
 }
 .menu-btn {
 	display: block;
-    margin: 10px auto;
-    height: 60px;
-    width: 40%;
-    line-height: 40px;
+	margin: 10px auto;
+	height: 60px;
+	width: 40%;
+	line-height: 40px;
 }
 
 .logout {
 	position: fixed;
 	top: 40px;
 	right: 40px;
+}
+.btn-back {
+	position: fixed;
+	top: 40px;
+	left: 40px;
 }

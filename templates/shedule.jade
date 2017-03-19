@@ -3,9 +3,8 @@ extends layout
 block content
 	include modules/modalFormEdit
 	include modules/modalFormAdd
-
-	form.logout-form(method="POST", action="/logout")
-		input(class="btn btn-primary btn-lg logout", type="submit", value="Logout")
+	include modules/btnBack
+	include modules/logout
 
 	.container
 		h1 List
