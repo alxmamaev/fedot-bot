@@ -1,0 +1,2 @@
+def init(bot):
+	pass
