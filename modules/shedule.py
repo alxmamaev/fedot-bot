@@ -28,6 +28,6 @@ def start(bot, message):
 	shedule = base.get_day_shedule(bot, cur_date)
 
 	if shedule: reply_message = SHEDULE_MESSAGE.render(shedule=shedule)
-	else: reply_message = "Ничего нет"
+	else: reply_message = bot.const["shedule-is-empty"]
 
 	bot.telegram.send_message(message.u_id, reply_message, parse_mode="Markdown")

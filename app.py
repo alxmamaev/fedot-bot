@@ -11,8 +11,11 @@ import random
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 
+
+
 app = flask.Flask(__name__)
 app.jinja_env.add_extension('pyjade.ext.jinja.PyJadeExtension')
+app.config.from_object('config')
 
 @app.route("/bot/<token>", methods=['POST'])
 def getMessage(token):
@@ -22,17 +25,40 @@ def getMessage(token):
         return "", 200
  
 @app.route("/")
-def webhook():
+def index():
+    if flask.session.get("user_id") not in bot.admins: return "Login please", 200
     return flask.render_template("index.jade")
 
+@app.route("/login/<key>")
+def login(key):
+    keys = bot.user_get(0, "login_keys") or {}
+    user_id = keys.get(key)
+
+    if not user_id: return "Error", 404
+    
+    keys.pop(key)
+    flask.session["user_id"] = user_id
+    bot.user_set(0, "login_keys", keys)
+
+    return flask.redirect("/")
+
+@app.route("/logout", methods = ["POST", "GET"])
+def logout():
+    flask.session.pop("user_id")
+    
+    return flask.redirect("/")
 
 #SHEDULE
 @app.route("/shedule")
 def shedule():
+    if flask.session.get("user_id") not in bot.admins: return "Login please", 200
+    
     return flask.render_template("shedule.jade", list=base.get_shedule(bot))
 
 @app.route("/shedule/add", methods = ["POST"])
 def shedule_add():
+    if flask.session.get("user_id") not in bot.admins: return "Login please", 200
+    
     event_id = str(random.randint(10,10000000))
     event_date, event_time = flask.request.form["date"].split()
     title = flask.request.form["title"]
@@ -42,6 +68,8 @@ def shedule_add():
 
 @app.route("/shedule/edit", methods = ["POST"])
 def shedule_edit():
+    if flask.session.get("user_id") not in bot.admins: return "Login please", 200
+
     event_id = flask.request.form["id"]
     print(flask.request.form)
     event_date, event_time = flask.request.form["date"].split()
@@ -53,6 +81,8 @@ def shedule_edit():
 
 @app.route("/shedule/delete", methods = ["POST"])
 def shedule_delete():
+    if flask.session.get("user_id") not in bot.admins: return "Login please", 200
+
     event_id = flask.request.form["id"]
 
     base.delete(bot, event_id)
