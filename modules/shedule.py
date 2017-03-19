@@ -23,7 +23,7 @@ def init(bot):
 	bot.handlers["shed-start"] = start
 
 def start(bot, message):
-	SHEDULE_MESSAGE = jinja2.Template("{% for event in shedule %}{{event.time}}\n\t\t{{event.title}}\n\n{% endfor %}")
+	SHEDULE_MESSAGE = jinja2.Template(bot.const["shedule-message"])
 	cur_date = time.strftime("%d.%m.%Y")
 	shedule = base.get_day_shedule(bot, cur_date)
 
