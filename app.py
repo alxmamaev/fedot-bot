@@ -89,13 +89,27 @@ def shedule_delete():
     return flask.redirect("/shedule")
 
 
+
 print("Creating bot")
 bot = Bot(debug=False)
 
 print("Collecting modules")
 bot.collect_modules()
 
+@app.route("/set_webhook")
+def set_webhook():
+    print("Setting webhook")
+    WEBHOOK_URL = os.environ["WEBHOOK_URL"]+"/bot/"+os.environ["BOT_TOKEN"]
+    bot.telegram.set_webhook(url=WEBHOOK_URL)
+
+
 if __name__=="__main__":
+    print("Creating bot")
+    bot = Bot(debug=False)
+
+    print("Collecting modules")
+    bot.collect_modules()
+
     print("Removing webhook")
     bot.telegram.remove_webhook()
     
