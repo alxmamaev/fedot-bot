@@ -2,3 +2,4 @@ pytelegrambotapi
 redis
 jinja2
 flask
+gunicorn
