@@ -4,11 +4,13 @@ def init(bot):
 	bot.handlers["settings-get-age"] = get_age
 	bot.handlers["settings-get-place"] = get_place
 	bot.handlers["settings-get-quad"] = get_quad
+	bot.handlers["settings-get-sex"] = get_sex
 
 	bot.handlers["settings-set-name"] = set_name
 	bot.handlers["settings-set-age"] = set_age
 	bot.handlers["settings-set-place"] = set_place
 	bot.handlers["settings-set-quad"] = set_quad
+	bot.handlers["settings-set-sex"] = set_sex
 
 
 def start(bot, message):
@@ -119,11 +121,43 @@ def set_quad(bot, message):
 
 	if user_quad == "cancel": 
 		bot.call_handler("settings-start", message)
+		return
+
+	if not user_quad: 
+		bot.call_handler("settings-get-quad", message)
+		return
 
 	users = bot.user_get(0, "users")
 	for i, user in enumerate(users):
 		if user["id"] == message.u_id:
 			user["quad"] = user_quad
+			users[i] = user
+
+	bot.user_set(0, "users", users)
+	bot.call_handler("settings-start", message)
+
+def get_sex(bot, message):
+	GET_AGE_MESSAGE = "Введите ваш пол."
+	SEX_KEYBOARD = bot.get_keyboard(bot.const["sex-keyboard"])
+
+	bot.telegram.send_message(message.u_id, GET_AGE_MESSAGE, reply_markup = SEX_KEYBOARD)
+	bot.user_set(message.u_id, "next_handler", "settings-set-sex")
+
+def set_sex(bot, message):
+	user_sex = bot.get_key(bot.const["sex-keyboard"], message.text)
+
+	if user_sex == "cancel": 
+		bot.call_handler("settings-start", message)
+		return
+
+	if user_sex is None: 
+		bot.call_handler("settings-get-sex", message)
+		return
+
+	users = bot.user_get(0, "users")
+	for i, user in enumerate(users):
+		if user["id"] == message.u_id:
+			user["sex"] = user_sex
 			users[i] = user
 
 	bot.user_set(0, "users", users)
