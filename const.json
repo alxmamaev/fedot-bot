@@ -83,7 +83,7 @@
 
 	"menu-keyboard": [[["🏆 Ачивки", "achv-start"], ["📅 Расписание", "shed-start"]],
         			 [["❓ Квест", "product-start"], ["👥 Справочник", "ref-start"]],
-       				 [["⚙️ Настройки", "ref-start"]]],
+       				 [["⚙️ Настройки", "settings-start"]]],
 
 	"admin-menu-keyboard": [[["🏆 Ачивки", "achv-start"], ["📅 Расписание", "shed-start"]],
        				 		[["📢 Предупреждение", "warning-start"], ["👥 Справочник", "ref-start"]],
@@ -93,6 +93,13 @@
 					[["Отмена ↩️", "cancel"]]],
 	
 	"cancel-keyboard": [[["Отмена ↩️", "cancel"]]],
+
+	"settings-keyboard": [[["Имя", "settings-get-name"], ["Возраст", "settings-get-age"]],
+						[["Пол", "name"], ["Отряд", "settings-get-quad"]],
+						[["Место жительства", "settings-get-place"]],
+						[["Меню 🏠", "menu"]]],
+
+	"settings-message": "Настройки 🛠",
 
 	"back-to-menu-keyboard": [[["Меню 🏠", "menu"]]]
 
