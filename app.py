@@ -89,16 +89,16 @@ def shedule_delete():
     return flask.redirect("/shedule")
 
 
+print("Creating bot")
+bot = Bot(debug=False)
+
+print("Collecting modules")
+bot.collect_modules()
+
+print("Removing webhook")
+bot.telegram.remove_webhook()
+
 if __name__=="__main__":
-    print("Creating bot")
-    bot = Bot(debug=False)
-
-    print("Collecting modules")
-    bot.collect_modules()
-
-    print("Removing webhook")
-    bot.telegram.remove_webhook()
-    
     
     if len(sys.argv)>1 and sys.argv[1]=="polling":
         print("Starting bot")
