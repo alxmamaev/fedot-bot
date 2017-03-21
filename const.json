@@ -94,7 +94,7 @@
 	
 	"cancel-keyboard": [[["Отмена ↩️", "cancel"]]],
 
-	"settings-keyboard": [[["Имя 👨‍🔧", "settings-get-name "], ["Возраст 👨🏻‍🎤", "settings-get-age"]],
+	"settings-keyboard": [[["Имя 👨‍🔧", "settings-get-name"], ["Возраст 👨🏻‍🎤", "settings-get-age"]],
 						[["Пол 👨‍💻", "settings-get-sex"], ["Отряд 👨‍🎓", "settings-get-quad"]],
 						[["Место жительства 🏘", "settings-get-place"]],
 						[["Меню 🏠", "menu"]]],

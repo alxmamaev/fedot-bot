@@ -82,7 +82,7 @@ def get_name(bot, message):
 	
 	if not found_users: 
 		bot.telegram.send_message(message.u_id, USER_NOT_FOUND_MESSAGE)
-		bot.call_handler("ref-get-name", message)
+		bot.call_handler("ref-start", message)
 		return
 
 	

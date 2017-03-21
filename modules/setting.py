@@ -137,7 +137,7 @@ def set_quad(bot, message):
 	bot.call_handler("settings-start", message)
 
 def get_sex(bot, message):
-	GET_AGE_MESSAGE = "Введите ваш пол."
+	GET_AGE_MESSAGE = "Выберите ваш пол."
 	SEX_KEYBOARD = bot.get_keyboard(bot.const["sex-keyboard"])
 
 	bot.telegram.send_message(message.u_id, GET_AGE_MESSAGE, reply_markup = SEX_KEYBOARD)
