@@ -17,9 +17,12 @@ def start(bot, message):
 	user_id = message.u_id
 	url = STANDART_URL+key
 
-	print(4)
 	keys = bot.user_get(0, "login_keys") or {}
 	keys[key] = user_id
+	print(keys)
 	bot.user_set(0, "login_keys", keys)
 
-	bot.telegram.send_message(message.u_id, url)
+	keyboard = telebot.types.InlineKeyboardMarkup()
+	keyboard.add( telebot.types.InlineKeyboardButton("Войти 🔑", url=url))
+
+	bot.telegram.send_message(message.u_id, "Нажмите на кнопку, что бы войти в веб интефейс.", reply_markup = keyboard)

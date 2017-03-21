@@ -31,7 +31,7 @@ def index():
 
 @app.route("/login/<key>")
 def login(key):
-    keys = bot.user_get(0, "login_keys") or {}
+    keys = bot.user_get(0, "login_keys")
     user_id = keys.get(key)
 
     if not user_id: return "Error", 404
