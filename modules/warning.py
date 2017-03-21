@@ -1,5 +1,6 @@
 # coding: utf8
 import jinja2
+import random
 
 def init(bot):
 	bot.handlers["warning-start"] = start

@@ -72,7 +72,7 @@
 						[["Робототехники 🤖", "rb"]], 
 						[["Отмена ↩️", "cancel"]]],
 
-	"shedule-message":"*Расписание на сегодня*  📆 \n\n {% for event in shedule %}*{{event.time}}*\n\t\t▫️ {{event.title}}\n\n{% endfor %}",
+	"shedule-message":"*Расписание на сегодня*  📆 \n\n{% for event in shedule %}*{{event.time}}*\n\t{% if event.type == 1 %}☑️ _{% elif event.type>1%}✅* {% else %}◻️ {% endif %}{{event.title}}{% if event.type == 1 %}_{% elif event.type>1%}*{% endif %}\n\n{% endfor %}",
 	"shedule-is-empty":"Похоже, здесь пусто ☹️",
 
 	"quads": {

@@ -1,7 +1,8 @@
 import telebot
 import random
+import os
 
-STANDART_URL = "http://127.0.0.1:8080/login/" 
+STANDART_URL = os.environ["WEBHOOK_URL"] + "/" 
 def init(bot):
 	bot.handlers["web-login"] = start
 

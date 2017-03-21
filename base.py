@@ -4,7 +4,7 @@ def add(bot, event_id, title, event_date, event_time):
     new_event = {"title":title, 
                 "time": time.strptime(event_time,"%H:%M"),
                 "id": event_id,
-                "type": "will"}
+                "type": 0}
 
     shedule = bot.user_get(0, "shedule") or {}
     day_key = event_date
