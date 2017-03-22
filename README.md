@@ -60,3 +60,11 @@
 
 ![](https://github.com/alxmamaev/image-storage/blob/master/fedot-bot/8.JPG)
 
+
+## Получение важных сообщений
+
+![](https://github.com/alxmamaev/image-storage/blob/master/fedot-bot/15.JPG)
+
+## Получения уведомлений об новых ачивках
+
+![](https://github.com/alxmamaev/image-storage/blob/master/fedot-bot/16.JPG)
