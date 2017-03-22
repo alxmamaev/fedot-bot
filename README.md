@@ -68,3 +68,4 @@
 ## Получения уведомлений об новых ачивках
 
 ![](https://github.com/alxmamaev/image-storage/blob/master/fedot-bot/16.JPG)
+![](https://github.com/alxmamaev/image-storage/blob/master/fedot-bot/17.JPG)
