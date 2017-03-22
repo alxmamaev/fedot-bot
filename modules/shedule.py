@@ -25,7 +25,18 @@ def init(bot):
 def start(bot, message):
 	SHEDULE_MESSAGE = jinja2.Template(bot.const["shedule-message"])
 	cur_date = time.strftime("%d.%m.%Y")
+	cur_time = time.localtime()
+
 	shedule = base.get_day_shedule(bot, cur_date)
+
+	flag = False
+	for i, event in enumerate(shedule):
+		event_time = time.strptime(event["time"], "%H:%M")
+		if event_time.tm_hour <= cur_time.tm_hour and event_time.tm_min <= cur_time.tm_min: 
+			if not flag: shedule[i]["type"] = 1
+			else: shedule[i]["type"] = 2
+			flag = True
+		else: shedule[i]["type"] = 0
 
 	if shedule: reply_message = SHEDULE_MESSAGE.render(shedule=shedule)
 	else: reply_message = bot.const["shedule-is-empty"]
